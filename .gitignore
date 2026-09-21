@@ -1,0 +1,5 @@
+/build/
+# the IDE's crash-recovery copies of open source files
+/recovery/
+# per-user IDE state: window geometry, recent files, last config
+/BeefSpace_User.toml
