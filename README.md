@@ -6,7 +6,7 @@ which makes it wgrender's Beef entry in the cross-binding benchmarks. It is not 
 complete binding yet.
 
 ```
-BeefProj.toml, src/      the binding: the `wgr` library project (Wgr.bf, hand-written)
+BeefProj.toml, src/wgr/  the binding: the `wgr` library project (Wgr.bf, hand-written)
 examples/simple/         the port of wgrender's examples/simple.c: its workspace, its
                          project (depends on wgr) and build.py
 project/lib/wgrender-c   wgrender, pinned (git submodule)
