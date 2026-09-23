@@ -9,7 +9,7 @@
     "emcc": "5.0.7"
   },
   "wgrender": {
-    "commit": "cb1bc58",
+    "commit": "9b8fae3",
     "dirty": false,
     "source": "submodule"
   },
@@ -59,26 +59,26 @@
       },
       "frame": {
         "label": "beef",
-        "frames": 481,
+        "frames": 480,
         "median": 16.66,
         "p95": 16.67,
         "overCap": 0,
-        "scriptMs": 0.523,
-        "taskMs": 0.825,
+        "scriptMs": 0.494,
+        "taskMs": 0.804,
         "scriptRuns": [
-          0.506,
-          0.523,
-          0.541
+          0.472,
+          0.494,
+          0.543
         ]
       },
       "gc": {
         "label": "beef",
-        "frames": 606,
+        "frames": 607,
         "uncapped": false,
-        "allocBytesPerFrame": 1343,
-        "allocMBPerMinute": 4.6,
+        "allocBytesPerFrame": 752,
+        "allocMBPerMinute": 2.6,
         "collections": 2,
-        "freedMB": 0.59,
+        "freedMB": 0.24,
         "heapStartMB": 8.6,
         "heapEndMB": 8.8,
         "frameMs": {
@@ -87,8 +87,8 @@
           "max": 16.67
         },
         "gcFrameMs": {
-          "median": 16.66,
-          "max": 16.66
+          "median": 16.67,
+          "max": 16.67
         },
         "loadMs": 0,
         "lateFrames": {
