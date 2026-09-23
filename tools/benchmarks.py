@@ -32,6 +32,7 @@ EXAMPLE = ROOT / 'examples/simple'
 
 def measure_all():
     measure.run(['python3', 'build.py', 'web'], cwd=EXAMPLE)
+    measure.run(['python3', 'build.py', 'web'], cwd=ROOT / 'examples/stress')
     beef = subprocess.run([os.environ.get('BEEF_BUILD', 'BeefBuild'), '-version'],
                           capture_output=True, text=True).stdout.strip().splitlines()[0]
     site = EXAMPLE / 'build/web'
@@ -44,6 +45,7 @@ def measure_all():
                                 site / 'index.html', site / 'examples.json']),
         'frame': measure.frame(site, 'beef', **page),
         'gc': measure.gc(site, 'beef', **page),
+        'stress': measure.stress(ROOT / 'examples/stress/build/web', 'beef', '/?n={n}', 'stress.js'),
     }
     return measure.write_results(RESULTS, 'wgrender-beef', measure.wgrender_info(WGRENDER, 'submodule'),
                                  [config])

@@ -9,6 +9,8 @@ complete binding yet.
 BeefProj.toml, src/wgr/  the binding: the `wgr` library project (Wgr.bf, hand-written)
 examples/simple/         the port of wgrender's examples/simple.c: its workspace, its
                          project (depends on wgr) and build.py
+examples/stress/         the port of wgrender's benchmark scene, tools/bench/stress.c
+                         (every example's build.py is the same file)
 project/lib/wgrender-c   wgrender, pinned (git submodule)
 tools/benchmarks.py      this port against the C -> docs/benchmarks.md
 ```
@@ -31,8 +33,8 @@ wgrender, check it out there.
 
 ## Benchmarks
 
-`tools/benchmarks.py` builds `simple` for the web and measures it with wgrender's
-harness (`tools/bench/` in wgrender), against wgrender's C baseline, into
+`tools/benchmarks.py` builds `simple` and `stress` for the web and measures them with
+wgrender's harness (`tools/bench/` in wgrender), against wgrender's C baseline, into
 `bench/results.json` and [docs/benchmarks.md](docs/benchmarks.md). Run wgrender's own
-`tools/benchmarks.py` first on the same machine; its doc collects this one's results
-from a sibling checkout. By hand, not in CI.
+`tools/benchmarks.py --all` to refresh every binding at once, or its plain run first
+and then this one. By hand, not in CI; the stress scene needs Xvfb and a GPU.

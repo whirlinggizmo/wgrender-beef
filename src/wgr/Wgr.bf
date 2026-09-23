@@ -159,6 +159,7 @@ static class Wgr
 	[CLink] public static extern void wgr_texture_release(WgrHandle texture);
 	[CLink] public static extern WgrHandle wgr_sprite3d_create(WgrHandle texture);
 	[CLink] public static extern bool wgr_sprite3d_set_facing(WgrHandle sprite, WgrSprite3DFacing facing);
+	[CLink] public static extern void wgr_sprite3d_destroy(WgrHandle sprite);
 	[CLink] public static extern bool wgr_sprite3d_set_transform(WgrHandle sprite, float px, float py, float pz, float rx, float ry, float rz, float sx, float sy, float sz);
 	[CLink] public static extern bool wgr_sprite3d_set_position(WgrHandle sprite, float x, float y, float z);
 	[CLink] public static extern bool wgr_sprite3d_set_rotation(WgrHandle sprite, float x, float y, float z);

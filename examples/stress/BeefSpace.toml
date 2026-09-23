@@ -1,0 +1,18 @@
+FileVersion = 1
+
+[Workspace]
+StartupProject = "stress"
+
+[Projects]
+stress = {Path = "."}
+wgr = {Path = "../.."}
+
+[Configs.Debug.wasm32]
+AllocType = "CRT"
+EnableObjectDebugFlags = false
+
+[Configs.Debug.Linux64]
+AllowHotSwapping = true
+
+[Configs.Release.wasm32]
+EmitDebugInfo = "No"

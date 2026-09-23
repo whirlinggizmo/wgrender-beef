@@ -9,7 +9,7 @@
     "emcc": "5.0.7"
   },
   "wgrender": {
-    "commit": "cc8a9f9",
+    "commit": "ae7a096",
     "dirty": false,
     "source": "submodule"
   },
@@ -63,19 +63,19 @@
         "median": 16.66,
         "p95": 16.67,
         "overCap": 0,
-        "scriptMs": 0.484,
-        "taskMs": 0.786,
+        "scriptMs": 0.491,
+        "taskMs": 0.784,
         "scriptRuns": [
-          0.453,
-          0.484,
-          0.507
+          0.47,
+          0.491,
+          0.491
         ]
       },
       "gc": {
         "label": "beef",
-        "frames": 606,
+        "frames": 608,
         "uncapped": false,
-        "allocBytesPerFrame": 329,
+        "allocBytesPerFrame": 325,
         "allocMBPerMinute": 1.1,
         "collections": 0,
         "freedMB": 0,
@@ -110,7 +110,180 @@
           }
         },
         "bufferFull": false
-      }
+      },
+      "stress": [
+        {
+          "n": 1000,
+          "frame": {
+            "label": "beef-1000",
+            "frames": 480,
+            "median": 16.66,
+            "p95": 16.67,
+            "overCap": 0,
+            "scriptMs": 0.421,
+            "taskMs": 0.503,
+            "scriptRuns": [
+              0.414,
+              0.421,
+              0.439
+            ]
+          },
+          "gc": {
+            "label": "beef-1000",
+            "frames": 607,
+            "uncapped": false,
+            "allocBytesPerFrame": 414,
+            "allocMBPerMinute": 1.4,
+            "collections": 0,
+            "freedMB": 0,
+            "heapStartMB": 1.9,
+            "heapEndMB": 2.2,
+            "frameMs": {
+              "median": 16.66,
+              "p99": 16.67,
+              "max": 16.67
+            },
+            "gcFrameMs": null,
+            "loadMs": 8,
+            "lateFrames": {
+              "over20": 0,
+              "over33": 0,
+              "pct": 0
+            },
+            "gc": {
+              "totalMs": 0.5,
+              "pctOfWall": 0.01,
+              "minor": {
+                "count": 1,
+                "medianMs": 0.52,
+                "maxMs": 0.52,
+                "totalMs": 0.5
+              },
+              "major": {
+                "count": 0,
+                "medianMs": null,
+                "maxMs": null,
+                "totalMs": 0
+              }
+            },
+            "bufferFull": false
+          }
+        },
+        {
+          "n": 5000,
+          "frame": {
+            "label": "beef-5000",
+            "frames": 480,
+            "median": 16.66,
+            "p95": 16.67,
+            "overCap": 0,
+            "scriptMs": 1.403,
+            "taskMs": 1.488,
+            "scriptRuns": [
+              1.377,
+              1.403,
+              1.437
+            ]
+          },
+          "gc": {
+            "label": "beef-5000",
+            "frames": 607,
+            "uncapped": false,
+            "allocBytesPerFrame": 413,
+            "allocMBPerMinute": 1.4,
+            "collections": 0,
+            "freedMB": 0,
+            "heapStartMB": 1.9,
+            "heapEndMB": 2.2,
+            "frameMs": {
+              "median": 16.66,
+              "p99": 16.67,
+              "max": 16.67
+            },
+            "gcFrameMs": null,
+            "loadMs": 8,
+            "lateFrames": {
+              "over20": 0,
+              "over33": 0,
+              "pct": 0
+            },
+            "gc": {
+              "totalMs": 0.3,
+              "pctOfWall": 0,
+              "minor": {
+                "count": 1,
+                "medianMs": 0.34,
+                "maxMs": 0.34,
+                "totalMs": 0.3
+              },
+              "major": {
+                "count": 0,
+                "medianMs": null,
+                "maxMs": null,
+                "totalMs": 0
+              }
+            },
+            "bufferFull": false
+          }
+        },
+        {
+          "n": 10000,
+          "frame": {
+            "label": "beef-10000",
+            "frames": 480,
+            "median": 16.66,
+            "p95": 16.67,
+            "overCap": 0,
+            "scriptMs": 2.647,
+            "taskMs": 2.741,
+            "scriptRuns": [
+              2.632,
+              2.647,
+              2.695
+            ]
+          },
+          "gc": {
+            "label": "beef-10000",
+            "frames": 607,
+            "uncapped": false,
+            "allocBytesPerFrame": 412,
+            "allocMBPerMinute": 1.4,
+            "collections": 0,
+            "freedMB": 0,
+            "heapStartMB": 1.9,
+            "heapEndMB": 2.2,
+            "frameMs": {
+              "median": 16.66,
+              "p99": 16.67,
+              "max": 16.67
+            },
+            "gcFrameMs": null,
+            "loadMs": 8,
+            "lateFrames": {
+              "over20": 0,
+              "over33": 0,
+              "pct": 0
+            },
+            "gc": {
+              "totalMs": 0.6,
+              "pctOfWall": 0.01,
+              "minor": {
+                "count": 1,
+                "medianMs": 0.59,
+                "maxMs": 0.59,
+                "totalMs": 0.6
+              },
+              "major": {
+                "count": 0,
+                "medianMs": null,
+                "maxMs": null,
+                "totalMs": 0
+              }
+            },
+            "bufferFull": false
+          }
+        }
+      ]
     }
   ]
 }
