@@ -9,7 +9,7 @@
     "emcc": "5.0.7"
   },
   "wgrender": {
-    "commit": "4d68abd",
+    "commit": "cb1bc58",
     "dirty": false,
     "source": "submodule"
   },
@@ -35,36 +35,50 @@
             "raw": 67053,
             "gzip": 24045,
             "brotli": 21331
+          },
+          {
+            "name": "index.html",
+            "kind": "page",
+            "raw": 8612,
+            "gzip": 3592,
+            "brotli": 2914
+          },
+          {
+            "name": "examples.json",
+            "kind": "page",
+            "raw": 11,
+            "gzip": 31,
+            "brotli": 15
           }
         ],
         "total": {
-          "raw": 915782,
-          "gzip": 393749,
-          "brotli": 319202
+          "raw": 924405,
+          "gzip": 397372,
+          "brotli": 322131
         }
       },
       "frame": {
         "label": "beef",
-        "frames": 480,
+        "frames": 481,
         "median": 16.66,
         "p95": 16.67,
         "overCap": 0,
-        "scriptMs": 0.487,
-        "taskMs": 0.803,
+        "scriptMs": 0.523,
+        "taskMs": 0.825,
         "scriptRuns": [
-          0.461,
-          0.487,
-          0.5
+          0.506,
+          0.523,
+          0.541
         ]
       },
       "gc": {
         "label": "beef",
-        "frames": 607,
+        "frames": 606,
         "uncapped": false,
-        "allocBytesPerFrame": 1502,
-        "allocMBPerMinute": 5.2,
-        "collections": 1,
-        "freedMB": 0.68,
+        "allocBytesPerFrame": 1343,
+        "allocMBPerMinute": 4.6,
+        "collections": 2,
+        "freedMB": 0.59,
         "heapStartMB": 8.6,
         "heapEndMB": 8.8,
         "frameMs": {

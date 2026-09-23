@@ -39,7 +39,9 @@ def measure_all():
     config = {
         'id': 'beef', 'label': 'Beef', 'project': 'wgrender-beef', 'example': 'simple',
         'toolchain': beef,
-        'sizes': measure.sizes([site / 'simple.wasm', site / 'simple.js']),
+        # the page is wgrender's example shell, which fetches examples.json for its picker
+        'sizes': measure.sizes([site / 'simple.wasm', site / 'simple.js',
+                                site / 'index.html', site / 'examples.json']),
         'frame': measure.frame(site, 'beef', **page),
         'gc': measure.gc(site, 'beef', **page),
     }
