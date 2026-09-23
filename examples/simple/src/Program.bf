@@ -10,7 +10,8 @@
 // project directory); on the web the served /assets (wgrender's tools/serve.py
 // mounts examples/assets there).
 using System;
-using static simple.Wgr;
+using wgr;
+using static wgr.Wgr;
 
 namespace simple;
 

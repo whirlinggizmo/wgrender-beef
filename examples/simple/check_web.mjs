@@ -4,15 +4,14 @@
 // tools/weblib.mjs, moves the mouse over the model, and fails on a console error,
 // an uncaught exception or a wgrender [ERROR]/[FATAL] line. Saves build/web-check.png.
 //
-//   node check_web.mjs [--site=DIR] [--settle=MS]    (settle default 8000; LIBWGR_ROOT
-//                                                     overrides wgrender)
+//   node check_web.mjs [--site=DIR] [--settle=MS]    (settle default 8000; wgrender is
+//                                                     the submodule)
 import { writeFileSync } from "node:fs";
-import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const WGRENDER = process.env.LIBWGR_ROOT ?? join(homedir(), "projects/github/whirlinggizmo/wgrender-c");
+const WGRENDER = join(HERE, "../../project/lib/wgrender-c");
 const { findBrowser, freePort, launchBrowser, openSession, RunProcesses, sleep, waitFor } =
     await import(pathToFileURL(join(WGRENDER, "tools/weblib.mjs")).href);
 const site = resolve(process.argv.find((a) => a.startsWith("--site="))?.split("=")[1] ?? join(HERE, "build/web"));

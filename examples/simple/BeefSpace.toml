@@ -5,6 +5,7 @@ StartupProject = "simple"
 
 [Projects]
 simple = {Path = "."}
+wgr = {Path = "../.."}
 
 [Configs.Debug.wasm32]
 AllocType = "CRT"

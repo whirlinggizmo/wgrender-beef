@@ -1,36 +1,7 @@
 FileVersion = 1
 
+# The binding, as a library project: examples depend on it (their BeefSpace.toml
+# lists it at the repository root) and link wgrender themselves.
 [Project]
-Name = "simple"
-StartupObject = "simple.Program"
-
-# wgrender is linked through LibPaths (not the link flags) so BeefBuild relinks when
-# it changes. It isn't built from here: make -C ~/projects/github/whirlinggizmo/wgrender-c
-# for desktop; ./build_web.py builds the web libraries before building.
-
-# Desktop: wgrender plus sokol's Linux system libraries (wgrender's examples/Makefile).
-[Configs.Debug.Linux64]
-LibPaths = ["$(ProjectDir)/../../github/whirlinggizmo/wgrender-c/build/desktop/libwgrender.a"]
-OtherLinkFlags = "$(LinkFlags) -lGL -lX11 -lXi -lXcursor -lXrandr -lasound -ldl -lm -lpthread"
-
-[Configs.Release.Linux64]
-LibPaths = ["$(ProjectDir)/../../github/whirlinggizmo/wgrender-c/build/desktop/libwgrender.a"]
-OtherLinkFlags = "$(LinkFlags) -lGL -lX11 -lXi -lXcursor -lXrandr -lasound -ldl -lm -lpthread"
-
-# Web: BeefBuild links with emcc (the toolchain's EmscriptenPath) against the
-# toolchain's wasm runtime ($(LinkFlags)), wgrender's no-threads web library (the
-# Beef objects aren't built with atomics) and wgrender's web link flags (mk/web.mk).
-# The post-build step writes the page. Serve with ./serve_web.sh.
-[Configs.Debug.wasm32]
-TargetDirectory = "$(ProjectDir)/build/web-debug"
-TargetName = "simple.js"
-LibPaths = ["$(ProjectDir)/../../github/whirlinggizmo/wgrender-c/build/webgl2-nothreads-debug/libwgrender.a"]
-OtherLinkFlags = "$(LinkFlags) -O0 -g -sASSERTIONS=1 -sUSE_WEBGL2=1 -sALLOW_MEMORY_GROWTH=1 -sFORCE_FILESYSTEM -lidbfs.js"
-PostBuildCmds = ["python3 \"$(ProjectDir)/build_web.py\" page \"$(TargetDir)\""]
-
-[Configs.Release.wasm32]
-TargetDirectory = "$(ProjectDir)/build/web"
-TargetName = "simple.js"
-LibPaths = ["$(ProjectDir)/../../github/whirlinggizmo/wgrender-c/build/webgl2-nothreads/libwgrender.a"]
-OtherLinkFlags = "$(LinkFlags) -O3 --closure 1 -sENVIRONMENT=web,worker -sUSE_WEBGL2=1 -sALLOW_MEMORY_GROWTH=1 -sFORCE_FILESYSTEM -lidbfs.js"
-PostBuildCmds = ["python3 \"$(ProjectDir)/build_web.py\" page \"$(TargetDir)\""]
+Name = "wgr"
+TargetType = "BeefLib"

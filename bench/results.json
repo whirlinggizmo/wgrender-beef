@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "project": "wgrender-beef",
+  "environment": {
+    "date": "2026-09-23",
+    "machine": "13th Gen Intel(R) Core(TM) i9-13900HX, Linux",
+    "browser": "Brave Browser 153.1.95.104",
+    "node": "v22.16.0",
+    "emcc": "5.0.7"
+  },
+  "wgrender": {
+    "commit": "4d68abd",
+    "dirty": false,
+    "source": "submodule"
+  },
+  "configurations": [
+    {
+      "id": "beef",
+      "label": "Beef",
+      "project": "wgrender-beef",
+      "example": "simple",
+      "toolchain": "BeefBuild 0.43.6",
+      "sizes": {
+        "files": [
+          {
+            "name": "simple.wasm",
+            "kind": "wasm",
+            "raw": 848729,
+            "gzip": 369704,
+            "brotli": 297871
+          },
+          {
+            "name": "simple.js",
+            "kind": "js",
+            "raw": 67053,
+            "gzip": 24045,
+            "brotli": 21331
+          }
+        ],
+        "total": {
+          "raw": 915782,
+          "gzip": 393749,
+          "brotli": 319202
+        }
+      },
+      "frame": {
+        "label": "beef",
+        "frames": 480,
+        "median": 16.66,
+        "p95": 16.67,
+        "overCap": 0,
+        "scriptMs": 0.487,
+        "taskMs": 0.803,
+        "scriptRuns": [
+          0.461,
+          0.487,
+          0.5
+        ]
+      },
+      "gc": {
+        "label": "beef",
+        "frames": 607,
+        "uncapped": false,
+        "allocBytesPerFrame": 1502,
+        "allocMBPerMinute": 5.2,
+        "collections": 1,
+        "freedMB": 0.68,
+        "heapStartMB": 8.6,
+        "heapEndMB": 8.8,
+        "frameMs": {
+          "median": 16.66,
+          "p99": 16.67,
+          "max": 16.67
+        },
+        "gcFrameMs": {
+          "median": 16.66,
+          "max": 16.66
+        },
+        "loadMs": 0,
+        "lateFrames": {
+          "over20": 0,
+          "over33": 0,
+          "pct": 0
+        },
+        "gc": {
+          "totalMs": 0,
+          "pctOfWall": 0,
+          "minor": {
+            "count": 0,
+            "medianMs": null,
+            "maxMs": null,
+            "totalMs": 0
+          },
+          "major": {
+            "count": 0,
+            "medianMs": null,
+            "maxMs": null,
+            "totalMs": 0
+          }
+        },
+        "bufferFull": false
+      }
+    }
+  ]
+}

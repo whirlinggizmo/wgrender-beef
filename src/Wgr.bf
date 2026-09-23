@@ -1,8 +1,8 @@
 using System;
 
-namespace simple;
+namespace wgr;
 
-// Hand-written bindings for the slice of wgrender (include/sk*.h) that the simple
+// Hand-written bindings for the slice of wgrender (include/wgr*.h) that the simple
 // example uses. Handles are wgr_handle_t (unsigned int); colors are wgr_color_t,
 // packed 0xRRGGBBAA values.
 
