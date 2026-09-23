@@ -11,7 +11,7 @@ Everything a first visit downloads before the first frame, assets aside: the was
 | Configuration | wasm | JS | page | total raw | total gzip | total brotli | vs C (brotli) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | C | 692,291 | 65,166 | 10,648 | 768,105 | 320,495 | 261,627 | 1.00x |
-| Beef | 848,729 | 67,053 | 8,623 | 924,405 | 397,372 | 322,131 | 1.23x |
+| Beef | 716,580 | 66,925 | 8,623 | 792,128 | 331,485 | 271,340 | 1.04x |
 
 ## Frame cost
 
@@ -20,7 +20,7 @@ Chrome's own CPU accounting over 8 s of steady state (`tools/bench/bench.mjs`), 
 | Configuration | script (ms/frame) | task (ms/frame) | script, all runs |
 | --- | ---: | ---: | --- |
 | C | 0.48 | 0.78 | 0.46, 0.48, 0.48 |
-| Beef | 0.49 | 0.80 | 0.47, 0.49, 0.54 |
+| Beef | 0.53 | 0.84 | 0.49, 0.53, 0.54 |
 
 ## JS heap and GC
 
@@ -29,9 +29,9 @@ V8's traced collections over 10 s at 60 fps (`tools/bench/gcbench.mjs`). Only th
 | Configuration | game code runs in | alloc (B/frame) | alloc (MB/min) | collections traced | late frames |
 | --- | --- | ---: | ---: | --- | ---: |
 | C | wasm | 1,578 | 5.4 | none | 0 |
-| Beef | wasm | 752 | 2.6 | none | 0 |
+| Beef | wasm | 983 | 3.4 | none | 0 |
 
-Code running in the wasm allocates nothing on the JS heap itself, so those rows (752 to 1,578 B/frame here) are the page's own noise: Emscripten's glue, the page and the measuring. Their order means nothing.
+Code running in the wasm allocates nothing on the JS heap itself, so those rows (983 to 1,578 B/frame here) are the page's own noise: Emscripten's glue, the page and the measuring. Their order means nothing.
 
 ## Calls from a JS guest
 

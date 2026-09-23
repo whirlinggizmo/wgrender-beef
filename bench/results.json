@@ -25,16 +25,16 @@
           {
             "name": "simple.wasm",
             "kind": "wasm",
-            "raw": 848729,
-            "gzip": 369704,
-            "brotli": 297871
+            "raw": 716580,
+            "gzip": 303874,
+            "brotli": 247101
           },
           {
             "name": "simple.js",
             "kind": "js",
-            "raw": 67053,
-            "gzip": 24045,
-            "brotli": 21331
+            "raw": 66925,
+            "gzip": 23988,
+            "brotli": 21310
           },
           {
             "name": "index.html",
@@ -52,33 +52,33 @@
           }
         ],
         "total": {
-          "raw": 924405,
-          "gzip": 397372,
-          "brotli": 322131
+          "raw": 792128,
+          "gzip": 331485,
+          "brotli": 271340
         }
       },
       "frame": {
         "label": "beef",
-        "frames": 480,
+        "frames": 481,
         "median": 16.66,
         "p95": 16.67,
         "overCap": 0,
-        "scriptMs": 0.494,
-        "taskMs": 0.804,
+        "scriptMs": 0.528,
+        "taskMs": 0.837,
         "scriptRuns": [
-          0.472,
-          0.494,
-          0.543
+          0.492,
+          0.528,
+          0.544
         ]
       },
       "gc": {
         "label": "beef",
         "frames": 607,
         "uncapped": false,
-        "allocBytesPerFrame": 752,
-        "allocMBPerMinute": 2.6,
-        "collections": 2,
-        "freedMB": 0.24,
+        "allocBytesPerFrame": 983,
+        "allocMBPerMinute": 3.4,
+        "collections": 1,
+        "freedMB": 0.38,
         "heapStartMB": 8.6,
         "heapEndMB": 8.8,
         "frameMs": {
@@ -87,8 +87,8 @@
           "max": 16.67
         },
         "gcFrameMs": {
-          "median": 16.67,
-          "max": 16.67
+          "median": 16.66,
+          "max": 16.66
         },
         "loadMs": 0,
         "lateFrames": {

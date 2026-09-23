@@ -48,8 +48,12 @@ class Program
 	static WgrHandle camera;
 	static WgrHandle scene;
 	static WgrColor backgroundColor;
-	static String message = new .() ~ delete _;
-	static String platformText = new .() ~ delete _;
+	// Text is formatted with libc's snprintf, as the C example does. Beef's own formatting
+	// ($"", AppendF, ToString with a format) would link its NumberFormatter, culture data and
+	// reflection names: tens of KB of wasm for four lines of debug text.
+	[CLink] static extern int32 snprintf(char8* buffer, int size, char8* format, ...);
+	static char8[256] message;
+	static char8[64] platformText;
 
 	// --- asset callbacks: path is local and ready; create the resource, then the object ---
 
@@ -118,8 +122,8 @@ class Program
 		wgr_set_target_fps(60);
 
 		countdownTimer = 30.0f;
-		message.Set("Hello from wgrender simple (Beef)!");
-		platformText.Set(scope $"Platform: {StringView(wgr_get_platform())}");
+		snprintf(&message[0], message.Count, "Hello from wgrender simple (Beef)!");
+		snprintf(&platformText[0], platformText.Count, "Platform: %s", wgr_get_platform());
 
 		camera = wgr_camera3d_create(.Perspective); // default fov: pi/4 (45 degrees)
 		wgr_camera3d_set_view(camera, 12, 12, 12, 0, 1, 0, 0, 1, 0);
@@ -159,46 +163,49 @@ class Program
 	static void UpdatePickMessage(WgrMouseState mouse)
 	{
 		WgrPickResult pick = wgr_scene_pick(scene, 0, (float)mouse.x, (float)mouse.y);
-		StringView what = !pick.hit              ? default
-						  : pick.handle == model  ? "Model"
-						  : pick.handle == sprite ? "Sprite"
-												  : default;
-		if (what.IsNull)
+		char8* what = !pick.hit              ? null
+					: pick.handle == model  ? "Model"
+					: pick.handle == sprite ? "Sprite"
+											: null;
+		if (what == null)
 		{
-			message.Set("Nothing picked!");
+			snprintf(&message[0], message.Count, "Nothing picked!");
 			return;
 		}
-		message.Clear();
-		message.AppendF("{} pick: Mouse position (mouse.x:{}, mouse.y:{}) pick result y: {:0.000000}",
-			what, mouse.x, mouse.y, pick.point_world.y);
+		snprintf(&message[0], message.Count, "%s pick: Mouse position (mouse.x:%d, mouse.y:%d) pick result y: %f",
+			what, mouse.x, mouse.y, (double)pick.point_world.y);
 	}
 
 	// Draw with the TTF font once it's loaded, the built-in font until then.
-	static void DrawText(WgrHandle font, StringView text, float x, float y, int32 size, WgrColor color)
+	static void DrawText(WgrHandle font, char8* text, float x, float y, int32 size, WgrColor color)
 	{
 		if (font != 0)
-			wgr_text_draw_ex(font, text.ToScopeCStr!(), x, y, (float)size, color);
+			wgr_text_draw_ex(font, text, x, y, (float)size, color);
 		else
-			wgr_text_draw(text.ToScopeCStr!(), (int32)x, (int32)y, size, color);
+			wgr_text_draw(text, (int32)x, (int32)y, size, color);
 	}
 
 	static void DrawCenteredMessage()
 	{
 		Vec2 screen = wgr_window_get_screen_size();
 		Vec2 size = komikaFont != 0
-			? wgr_text_measure_ex(komikaFont, message, (float)KOMIKA_FONT_SIZE)
-			: .() { x = (float)wgr_text_measure(message, KOMIKA_FONT_SIZE), y = (float)KOMIKA_FONT_SIZE };
-		DrawText(komikaFont, message, (screen.x - size.x) / 2.0f,
+			? wgr_text_measure_ex(komikaFont, &message[0], (float)KOMIKA_FONT_SIZE)
+			: .() { x = (float)wgr_text_measure(&message[0], KOMIKA_FONT_SIZE), y = (float)KOMIKA_FONT_SIZE };
+		DrawText(komikaFont, &message[0], (screen.x - size.x) / 2.0f,
 			(screen.y - size.y) / 2.0f, KOMIKA_FONT_SIZE, COLOR_BLUE);
 	}
 
 	static void DrawOverlay(WgrMouseState mouse)
 	{
-		DrawText(debugFont, scope $"Remaining: {countdownTimer:0.00}", 10, 36, DEBUG_FONT_SIZE, COLOR_BLACK);
-		DrawText(debugFont, scope $"Elapsed: {elapsed:0.00}", 10, 56, DEBUG_FONT_SIZE, COLOR_BLACK);
-		DrawText(debugFont, scope $"Mouse: ({mouse.x}, {mouse.y}) w:{mouse.wheel:0.0} b:[{mouse.left}, {mouse.right}, {mouse.middle}]",
-			10, 76, DEBUG_FONT_SIZE, COLOR_BLACK);
-		DrawText(debugFont, platformText, 10, 96, DEBUG_FONT_SIZE, COLOR_BLACK);
+		char8[128] line = ?;
+		snprintf(&line[0], line.Count, "Remaining: %.2f", (double)countdownTimer);
+		DrawText(debugFont, &line[0], 10, 36, DEBUG_FONT_SIZE, COLOR_BLACK);
+		snprintf(&line[0], line.Count, "Elapsed: %.2f", (double)elapsed);
+		DrawText(debugFont, &line[0], 10, 56, DEBUG_FONT_SIZE, COLOR_BLACK);
+		snprintf(&line[0], line.Count, "Mouse: (%d, %d) w:%.1f b:[%d, %d, %d]", mouse.x, mouse.y,
+			(double)mouse.wheel, mouse.left, mouse.right, mouse.middle);
+		DrawText(debugFont, &line[0], 10, 76, DEBUG_FONT_SIZE, COLOR_BLACK);
+		DrawText(debugFont, &platformText[0], 10, 96, DEBUG_FONT_SIZE, COLOR_BLACK);
 
 		wgr_text_draw_fps_ex(debugFont, 10, 10, DEBUG_FONT_SIZE, greyAlpha);
 	}
