@@ -145,6 +145,12 @@ static class Wgr
 	[CLink] public static extern bool wgr_model_set_animation_speed(WgrHandle model, float speed);
 	[CLink] public static extern bool wgr_model_set_animation_loop(WgrHandle model, bool loop);
 	[CLink] public static extern bool wgr_model_set_transform(WgrHandle model, float px, float py, float pz, float rx, float ry, float rz, float sx, float sy, float sz);
+	[CLink] public static extern bool wgr_model_set_position(WgrHandle model, float x, float y, float z);
+	[CLink] public static extern bool wgr_model_set_rotation(WgrHandle model, float x, float y, float z);
+	[CLink] public static extern bool wgr_model_set_scale(WgrHandle model, float x, float y, float z);
+	[CLink] public static extern Vec3 wgr_model_get_position(WgrHandle model);
+	[CLink] public static extern Vec3 wgr_model_get_rotation(WgrHandle model);
+	[CLink] public static extern Vec3 wgr_model_get_scale(WgrHandle model);
 	[CLink] public static extern bool wgr_model_set_tint(WgrHandle model, WgrColor color);
 	[CLink] public static extern bool wgr_model_animate(WgrHandle model, float dt);
 
@@ -154,6 +160,12 @@ static class Wgr
 	[CLink] public static extern WgrHandle wgr_sprite3d_create(WgrHandle texture);
 	[CLink] public static extern bool wgr_sprite3d_set_facing(WgrHandle sprite, WgrSprite3DFacing facing);
 	[CLink] public static extern bool wgr_sprite3d_set_transform(WgrHandle sprite, float px, float py, float pz, float rx, float ry, float rz, float sx, float sy, float sz);
+	[CLink] public static extern bool wgr_sprite3d_set_position(WgrHandle sprite, float x, float y, float z);
+	[CLink] public static extern bool wgr_sprite3d_set_rotation(WgrHandle sprite, float x, float y, float z);
+	[CLink] public static extern bool wgr_sprite3d_set_scale(WgrHandle sprite, float x, float y, float z);
+	[CLink] public static extern Vec3 wgr_sprite3d_get_position(WgrHandle sprite);
+	[CLink] public static extern Vec3 wgr_sprite3d_get_rotation(WgrHandle sprite);
+	[CLink] public static extern Vec3 wgr_sprite3d_get_scale(WgrHandle sprite);
 	[CLink] public static extern bool wgr_sprite3d_set_tint(WgrHandle sprite, WgrColor color);
 
 	// wgr_font.h, wgr_text.h

@@ -9,7 +9,7 @@
     "emcc": "5.0.7"
   },
   "wgrender": {
-    "commit": "76a3807",
+    "commit": "cc8a9f9",
     "dirty": false,
     "source": "submodule"
   },
@@ -25,23 +25,23 @@
           {
             "name": "simple.wasm",
             "kind": "wasm",
-            "raw": 716580,
-            "gzip": 303874,
-            "brotli": 247101
+            "raw": 719493,
+            "gzip": 304408,
+            "brotli": 247443
           },
           {
             "name": "simple.js",
             "kind": "js",
-            "raw": 66925,
-            "gzip": 23988,
-            "brotli": 21310
+            "raw": 67589,
+            "gzip": 24105,
+            "brotli": 21402
           },
           {
             "name": "index.html",
             "kind": "page",
             "raw": 8612,
-            "gzip": 3592,
-            "brotli": 2914
+            "gzip": 3593,
+            "brotli": 2916
           },
           {
             "name": "examples.json",
@@ -52,33 +52,33 @@
           }
         ],
         "total": {
-          "raw": 792128,
-          "gzip": 331485,
-          "brotli": 271340
+          "raw": 795705,
+          "gzip": 332137,
+          "brotli": 271776
         }
       },
       "frame": {
         "label": "beef",
-        "frames": 479,
+        "frames": 480,
         "median": 16.66,
         "p95": 16.67,
         "overCap": 0,
-        "scriptMs": 0.497,
-        "taskMs": 0.792,
+        "scriptMs": 0.484,
+        "taskMs": 0.786,
         "scriptRuns": [
-          0.495,
-          0.497,
-          0.54
+          0.453,
+          0.484,
+          0.507
         ]
       },
       "gc": {
         "label": "beef",
-        "frames": 607,
+        "frames": 606,
         "uncapped": false,
-        "allocBytesPerFrame": 1500,
-        "allocMBPerMinute": 5.2,
-        "collections": 1,
-        "freedMB": 0.68,
+        "allocBytesPerFrame": 329,
+        "allocMBPerMinute": 1.1,
+        "collections": 0,
+        "freedMB": 0,
         "heapStartMB": 8.6,
         "heapEndMB": 8.8,
         "frameMs": {
@@ -86,10 +86,7 @@
           "p99": 16.67,
           "max": 16.67
         },
-        "gcFrameMs": {
-          "median": 16.66,
-          "max": 16.66
-        },
+        "gcFrameMs": null,
         "loadMs": 0,
         "lateFrames": {
           "over20": 0,

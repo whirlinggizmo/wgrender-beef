@@ -74,7 +74,7 @@ class Program
 		wgr_model_set_animation(model, 1);
 		wgr_model_set_animation_speed(model, 1.0f);
 		wgr_model_set_animation_loop(model, true);
-		wgr_model_set_transform(model, 0, 0, 0, 0, 0, 0, 1, 1, 1);
+		wgr_model_set_position(model, 0, 0, 0);
 		wgr_model_set_tint(model, COLOR_RAYWHITE);
 		wgr_scene_add(scene, model, 0);
 	}
@@ -85,7 +85,7 @@ class Program
 		sprite = wgr_sprite3d_create(texture);
 		wgr_texture_release(texture); // the sprite holds its own reference
 		wgr_sprite3d_set_facing(sprite, .Free); // librl's default: oriented by its rotation
-		wgr_sprite3d_set_transform(sprite, 0, SPRITE_Y_OFFSET, 0, 0, 0, 0, 1, 1, 1);
+		wgr_sprite3d_set_position(sprite, 0, SPRITE_Y_OFFSET, 0);
 		wgr_sprite3d_set_tint(sprite, COLOR_RAYWHITE);
 		wgr_scene_add(scene, sprite, 0);
 	}
@@ -156,7 +156,7 @@ class Program
 		if (sprite != 0)
 		{
 			float y = Math.Sin(elapsed * BOB_SPEED) * BOB_HEIGHT + SPRITE_Y_OFFSET;
-			wgr_sprite3d_set_transform(sprite, 0, y, 0, 0, 0, 0, 1, 1, 1);
+			wgr_sprite3d_set_position(sprite, 0, y, 0);
 		}
 	}
 
