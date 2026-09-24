@@ -14,12 +14,12 @@ then the Beef workspace with BeefBuild. There is no make and no shell script.
 - for the web: Emscripten (emsdk), with `emcc` on `PATH`. wgrender's web library is
   built by its `tools/buildweb.py`, on the Python emsdk brings.
 - for the desktop: CMake 3.21 or newer and a C compiler, which build wgrender's
-  library. On Linux that's its `desktop` preset, and the system's GL, X11 and ALSA dev
+  library. On Linux that's its `linux-release` preset, and the system's GL, X11 and ALSA dev
   packages, which sokol links: `python3 project/lib/wgrender-c/tools/deps.py install`
   (apt, dnf or pacman). On Windows it's Visual Studio's C++ tools (MSVC), which
   `build.py` finds with vswhere: Beef links with MSVC's linker, so wgrender is built with
-  MSVC too, with the static C runtime a Beef project links (`/MT`, `/MTd` for debug),
-  into `build/desktop-msvc[-debug]`. It needs no Visual Studio prompt, and CMake with
+  MSVC too, by its `windows-msvc[-debug]` preset, which uses the static C runtime a Beef
+  project links (`/MT`, `/MTd` for debug), into `build/windows/msvc[-debug]`. It needs no Visual Studio prompt, and CMake with
   Ninja on `PATH`.
 - Python 3
 - for `build.py check`: a Chromium-based browser (Brave, Chrome, Chromium or Edge); the
@@ -54,9 +54,10 @@ after BeefBuild has decided whether to relink. So after changing wgrender, run
 ## Which wgrender
 
 The submodule, `project/lib/wgrender-c`, and only that: the example projects link its
-library by path (`LibPaths` in `BeefProj.toml`: `build/desktop/libwgrender.a` from the
-CMake preset on Linux, `build/desktop-msvc[-debug]/wgrender.lib` on Windows,
-`build/webgl2-nothreads[-debug]/libwgrender.a` from buildweb.py). To try
+library by path, from wgrender's `build/<platform>/<variant>/` (the wg* layout:
+whirlinggizmo/.github CONVENTIONS.md): `LibPaths` in `BeefProj.toml` names
+`build/linux/release/libwgrender.a` on Linux, `build/windows/msvc[-debug]/wgrender.lib`
+on Windows, and `build/web/webgl2-nothreads[-debug]/libwgrender.a` from buildweb.py. To try
 another wgrender, check it out in the submodule.
 
 ## Benchmarks

@@ -12,11 +12,12 @@ Beef workspace. Every example's build.py is this same file.
                                          goes to build/web-check.png
 
 wgrender's library comes from wgrender's own build: the web one from its
-tools/buildweb.py (emcc and Python), the desktop one from CMake: on Linux its `desktop`
-preset, on Windows MSVC (Beef links with MSVC's linker, which can't take MinGW objects),
-in Visual Studio's own environment (found with vswhere), with the static C runtime a
-Beef project links by default: build/desktop-msvc (/MT) and build/desktop-msvc-debug
-(/MTd).
+tools/buildweb.py (emcc and Python), the desktop one from CMake: on Linux its
+`linux-release` preset, on Windows its `windows-msvc` or `windows-msvc-debug` preset
+(Beef links with MSVC's linker, which can't take MinGW objects), in Visual Studio's own
+environment (found with vswhere). Those use the static C runtime a Beef project links
+by default (/MT, /MTd). Each is in wgrender's build/<platform>/<variant>/, the wg*
+family layout (whirlinggizmo/.github CONVENTIONS.md, "Build directories").
 
 The IDE builds the same thing (pick the wasm32, Linux64 or Win64 platform), but can't build
 wgrender first: a pre-build step runs after BeefBuild has decided whether to relink.
@@ -103,12 +104,11 @@ def vcvars():
 
 
 def msvc_library(kind):
-    """wgrender's library, built with MSVC and the static C runtime Beef links."""
-    out = WGRENDER / ('build/desktop-msvc' if kind == 'release' else 'build/desktop-msvc-debug')
-    crt = 'MultiThreaded' if kind == 'release' else 'MultiThreadedDebug'
-    configure = (f'cmake -S "{WGRENDER}" -B "{out}" -G Ninja -DCMAKE_C_COMPILER=cl '
-                 f'-DCMAKE_MSVC_RUNTIME_LIBRARY={crt} -DWGR_EXAMPLES=OFF')
-    build = f'cmake --build "{out}" --target wgrender'
+    """wgrender's library from its windows-msvc preset: MSVC, and the static C runtime
+    Beef links."""
+    preset = 'windows-msvc' if kind == 'release' else 'windows-msvc-debug'
+    configure = f'cd /d "{WGRENDER}" && cmake --preset {preset}'
+    build = f'cmake --build --preset {preset} --target wgrender'
     # vcvars's own exit code isn't to be trusted, so `&`; the build's is
     command = f'call "{vcvars()}" >nul & {configure} >nul && {build}'
     print('+', command, flush=True)
@@ -140,9 +140,9 @@ def desktop(kind):
     if WINDOWS:
         msvc_library(kind)
     else:
-        # wgrender's desktop CMake preset, as far as the library: build/desktop/libwgrender.a
-        run(['cmake', '--preset', 'desktop'], cwd=WGRENDER, stdout=subprocess.DEVNULL)
-        run(['cmake', '--build', '--preset', 'desktop', '--target', 'wgrender'], cwd=WGRENDER)
+        # wgrender's linux-release preset, as far as the library: build/linux/release/libwgrender.a
+        run(['cmake', '--preset', 'linux-release'], cwd=WGRENDER, stdout=subprocess.DEVNULL)
+        run(['cmake', '--build', '--preset', 'linux-release', '--target', 'wgrender'], cwd=WGRENDER)
     run([BEEF_BUILD, f'-workspace={ROOT}', f'-config={config}', f'-platform={PLATFORM}'])
     print(f'built {ROOT / "build" / f"{config}_{PLATFORM}/{NAME}"}: run it from {ROOT} (assets/ is here)')
 

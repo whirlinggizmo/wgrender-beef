@@ -12,25 +12,25 @@ wgr = "*"
 # through LibPaths (not the link flags) so BeefBuild relinks when it changes. It isn't
 # built from here: ./build.py builds it first.
 
-# Desktop: wgrender (its `desktop` CMake preset) plus sokol's Linux system libraries
+# Desktop: wgrender (its `linux-release` CMake preset) plus sokol's Linux system libraries
 # (build.json's desktop linux libs).
 [Configs.Debug.Linux64]
-LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/desktop/libwgrender.a"]
+LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/linux/release/libwgrender.a"]
 OtherLinkFlags = "$(LinkFlags) -lGL -lX11 -lXi -lXcursor -lXrandr -lasound -ldl -lm -lpthread"
 
 [Configs.Release.Linux64]
-LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/desktop/libwgrender.a"]
+LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/linux/release/libwgrender.a"]
 OtherLinkFlags = "$(LinkFlags) -lGL -lX11 -lXi -lXcursor -lXrandr -lasound -ldl -lm -lpthread"
 
-# Windows: wgrender built with MSVC (build.py desktop: Beef links with MSVC's linker)
-# and the static C runtime a Beef project links by default, /MT for release and /MTd for
+# Windows: wgrender's windows-msvc presets (build.py desktop: Beef links with MSVC's
+# linker), which use the static C runtime a Beef project links by default, /MT for release and /MTd for
 # debug, plus the Windows libraries sokol needs (build.json's desktop windows libs).
 [Configs.Debug.Win64]
-LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/desktop-msvc-debug/wgrender.lib"]
+LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/windows/msvc-debug/wgrender.lib"]
 OtherLinkFlags = "$(LinkFlags) opengl32.lib gdi32.lib user32.lib kernel32.lib ole32.lib shell32.lib winmm.lib"
 
 [Configs.Release.Win64]
-LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/desktop-msvc/wgrender.lib"]
+LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/windows/msvc/wgrender.lib"]
 OtherLinkFlags = "$(LinkFlags) opengl32.lib gdi32.lib user32.lib kernel32.lib ole32.lib shell32.lib winmm.lib"
 
 # Web: BeefBuild links with emcc (the toolchain's EmscriptenPath) against the
@@ -40,13 +40,13 @@ OtherLinkFlags = "$(LinkFlags) opengl32.lib gdi32.lib user32.lib kernel32.lib ol
 [Configs.Debug.wasm32]
 TargetDirectory = "$(ProjectDir)/build/web-debug"
 TargetName = "simple.js"
-LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/webgl2-nothreads-debug/libwgrender.a"]
+LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/web/webgl2-nothreads-debug/libwgrender.a"]
 OtherLinkFlags = "$(LinkFlags) -O0 -g -sASSERTIONS=1 -sUSE_WEBGL2=1 -sALLOW_MEMORY_GROWTH=1 -sFORCE_FILESYSTEM -lidbfs.js"
 PostBuildCmds = ["python3 \"$(ProjectDir)/build.py\" page \"$(TargetDir)\""]
 
 [Configs.Release.wasm32]
 TargetDirectory = "$(ProjectDir)/build/web"
 TargetName = "simple.js"
-LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/webgl2-nothreads/libwgrender.a"]
+LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/build/web/webgl2-nothreads/libwgrender.a"]
 OtherLinkFlags = "$(LinkFlags) -O3 --closure 1 -sENVIRONMENT=web,worker -sUSE_WEBGL2=1 -sALLOW_MEMORY_GROWTH=1 -sFORCE_FILESYSTEM -lidbfs.js"
 PostBuildCmds = ["python3 \"$(ProjectDir)/build.py\" page \"$(TargetDir)\""]
