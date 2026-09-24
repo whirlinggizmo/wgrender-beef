@@ -194,7 +194,7 @@ static class Wgr
 	[CLink] public static extern WgrMouseState wgr_input_get_mouse_state();
 	[CLink] public static extern WgrButtonState wgr_input_get_key(WgrKey key); // Up for an unknown key
 	[CLink] public static extern Vec2 wgr_window_get_screen_size();
-	[CLink] public static extern void wgr_render_begin();
-	[CLink] public static extern void wgr_render_end();
+	[CLink] public static extern void wgr_render_begin_frame();
+	[CLink] public static extern void wgr_render_end_frame();
 	[CLink] public static extern void wgr_render_clear_background(WgrColor color);
 }

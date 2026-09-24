@@ -156,11 +156,11 @@ class Program
 			for (int i < n)
 				Update(i);
 		}
-		wgr_render_begin();
+		wgr_render_begin_frame();
 		wgr_render_clear_background(background);
 		wgr_scene_draw(scene);
 		DrawText();
-		wgr_render_end();
+		wgr_render_end_frame();
 	}
 
 	// ?n= in the page's URL on the web, the first argument on desktop

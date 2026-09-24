@@ -223,12 +223,12 @@ class Program
 		Update(dt);
 		UpdatePickMessage(mouse);
 
-		wgr_render_begin();
+		wgr_render_begin_frame();
 		wgr_render_clear_background(backgroundColor);
 		wgr_scene_draw(scene);
 		DrawCenteredMessage();
 		DrawOverlay(mouse);
-		wgr_render_end();
+		wgr_render_end_frame();
 	}
 
 	public static int Main(String[] args)
