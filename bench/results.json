@@ -5,11 +5,10 @@
     "date": "2026-09-24",
     "machine": "13th Gen Intel(R) Core(TM) i9-13900HX, Linux",
     "browser": "Brave Browser 153.1.95.104",
-    "node": "v22.16.0",
     "emcc": "5.0.7"
   },
   "wgrender": {
-    "commit": "dcc17c3",
+    "commit": "399ede3",
     "dirty": false,
     "source": "submodule"
   },
@@ -25,23 +24,23 @@
           {
             "name": "simple.wasm",
             "kind": "wasm",
-            "raw": 719506,
-            "gzip": 304431,
-            "brotli": 247738
+            "raw": 719533,
+            "gzip": 304723,
+            "brotli": 247641
           },
           {
             "name": "simple.js",
             "kind": "js",
             "raw": 67595,
-            "gzip": 24106,
-            "brotli": 21376
+            "gzip": 24111,
+            "brotli": 21432
           },
           {
             "name": "index.html",
             "kind": "page",
-            "raw": 8612,
-            "gzip": 3592,
-            "brotli": 2914
+            "raw": 8636,
+            "gzip": 3602,
+            "brotli": 2926
           },
           {
             "name": "examples.json",
@@ -52,33 +51,33 @@
           }
         ],
         "total": {
-          "raw": 795724,
-          "gzip": 332160,
-          "brotli": 272043
+          "raw": 795775,
+          "gzip": 332467,
+          "brotli": 272014
         }
       },
       "frame": {
         "label": "beef",
-        "frames": 481,
+        "frames": 479,
         "median": 16.66,
         "p95": 16.67,
-        "overCap": 0,
-        "scriptMs": 0.496,
-        "taskMs": 0.793,
+        "overCap": 0.0,
+        "scriptMs": 0.519,
+        "taskMs": 0.815,
         "scriptRuns": [
-          0.479,
-          0.496,
-          0.503
+          0.48,
+          0.519,
+          0.526
         ]
       },
       "gc": {
         "label": "beef",
-        "frames": 607,
+        "frames": 606,
         "uncapped": false,
-        "allocBytesPerFrame": 2313,
-        "allocMBPerMinute": 7.9,
-        "collections": 2,
-        "freedMB": 1.15,
+        "allocBytesPerFrame": 1146,
+        "allocMBPerMinute": 3.9,
+        "collections": 1,
+        "freedMB": 0.47,
         "heapStartMB": 8.6,
         "heapEndMB": 8.8,
         "frameMs": {
@@ -87,18 +86,18 @@
           "max": 16.67
         },
         "gcFrameMs": {
-          "median": 16.67,
-          "max": 16.67
+          "median": 16.66,
+          "max": 16.66
         },
         "loadMs": 0,
         "lateFrames": {
           "over20": 0,
           "over33": 0,
-          "pct": 0
+          "pct": 0.0
         },
         "gc": {
-          "totalMs": 0,
-          "pctOfWall": 0,
+          "totalMs": 0.0,
+          "pctOfWall": 0.0,
           "minor": {
             "count": 0,
             "medianMs": null,
@@ -119,48 +118,51 @@
           "n": 1000,
           "frame": {
             "label": "beef-1000",
-            "frames": 479,
+            "frames": 480,
             "median": 16.66,
             "p95": 16.67,
-            "overCap": 0,
-            "scriptMs": 0.428,
-            "taskMs": 0.513,
+            "overCap": 0.0,
+            "scriptMs": 0.463,
+            "taskMs": 0.552,
             "scriptRuns": [
-              0.428,
-              0.428,
-              0.435
+              0.435,
+              0.463,
+              0.47
             ]
           },
           "gc": {
             "label": "beef-1000",
-            "frames": 607,
+            "frames": 605,
             "uncapped": false,
-            "allocBytesPerFrame": 414,
+            "allocBytesPerFrame": 415,
             "allocMBPerMinute": 1.4,
-            "collections": 0,
-            "freedMB": 0,
-            "heapStartMB": 1.9,
-            "heapEndMB": 2.2,
+            "collections": 1,
+            "freedMB": 0.42,
+            "heapStartMB": 2.3,
+            "heapEndMB": 2.1,
             "frameMs": {
               "median": 16.66,
               "p99": 16.67,
-              "max": 16.67
+              "max": 33.33
             },
-            "gcFrameMs": null,
+            "gcFrameMs": {
+              "median": 16.66,
+              "max": 16.66
+            },
             "loadMs": 8,
             "lateFrames": {
-              "over20": 0,
-              "over33": 0,
-              "pct": 0
+              "over20": 1,
+              "over33": 1,
+              "pct": 0.17
             },
             "gc": {
-              "totalMs": 0.6,
-              "pctOfWall": 0.01,
+              "totalMs": 0.4,
+              "pctOfWall": 0.0,
               "minor": {
                 "count": 1,
-                "medianMs": 0.58,
-                "maxMs": 0.58,
-                "totalMs": 0.6
+                "medianMs": 0.39,
+                "maxMs": 0.39,
+                "totalMs": 0.4
               },
               "major": {
                 "count": 0,
@@ -176,26 +178,26 @@
           "n": 5000,
           "frame": {
             "label": "beef-5000",
-            "frames": 481,
+            "frames": 479,
             "median": 16.66,
             "p95": 16.67,
-            "overCap": 0,
-            "scriptMs": 1.452,
-            "taskMs": 1.541,
+            "overCap": 0.0,
+            "scriptMs": 1.426,
+            "taskMs": 1.514,
             "scriptRuns": [
-              1.348,
-              1.452,
-              1.466
+              1.412,
+              1.426,
+              1.687
             ]
           },
           "gc": {
             "label": "beef-5000",
-            "frames": 607,
+            "frames": 606,
             "uncapped": false,
-            "allocBytesPerFrame": 413,
+            "allocBytesPerFrame": 415,
             "allocMBPerMinute": 1.4,
             "collections": 0,
-            "freedMB": 0,
+            "freedMB": 0.0,
             "heapStartMB": 1.9,
             "heapEndMB": 2.2,
             "frameMs": {
@@ -208,16 +210,16 @@
             "lateFrames": {
               "over20": 0,
               "over33": 0,
-              "pct": 0
+              "pct": 0.0
             },
             "gc": {
-              "totalMs": 0.5,
-              "pctOfWall": 0.01,
+              "totalMs": 0.4,
+              "pctOfWall": 0.0,
               "minor": {
                 "count": 1,
-                "medianMs": 0.51,
-                "maxMs": 0.51,
-                "totalMs": 0.5
+                "medianMs": 0.38,
+                "maxMs": 0.38,
+                "totalMs": 0.4
               },
               "major": {
                 "count": 0,
@@ -233,30 +235,30 @@
           "n": 10000,
           "frame": {
             "label": "beef-10000",
-            "frames": 480,
+            "frames": 478,
             "median": 16.66,
             "p95": 16.67,
-            "overCap": 0,
-            "scriptMs": 2.637,
-            "taskMs": 2.728,
+            "overCap": 0.2,
+            "scriptMs": 2.657,
+            "taskMs": 2.753,
             "scriptRuns": [
-              2.616,
-              2.637,
-              2.663
+              2.649,
+              2.657,
+              2.738
             ]
           },
           "gc": {
             "label": "beef-10000",
-            "frames": 607,
+            "frames": 606,
             "uncapped": false,
-            "allocBytesPerFrame": 414,
+            "allocBytesPerFrame": 413,
             "allocMBPerMinute": 1.4,
             "collections": 0,
-            "freedMB": 0,
+            "freedMB": 0.0,
             "heapStartMB": 1.9,
             "heapEndMB": 2.2,
             "frameMs": {
-              "median": 16.67,
+              "median": 16.66,
               "p99": 16.67,
               "max": 16.67
             },
@@ -265,16 +267,16 @@
             "lateFrames": {
               "over20": 0,
               "over33": 0,
-              "pct": 0
+              "pct": 0.0
             },
             "gc": {
-              "totalMs": 0.4,
-              "pctOfWall": 0,
+              "totalMs": 0.5,
+              "pctOfWall": 0.01,
               "minor": {
                 "count": 1,
-                "medianMs": 0.41,
-                "maxMs": 0.41,
-                "totalMs": 0.4
+                "medianMs": 0.46,
+                "maxMs": 0.46,
+                "totalMs": 0.5
               },
               "major": {
                 "count": 0,

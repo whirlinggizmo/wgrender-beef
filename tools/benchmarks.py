@@ -31,8 +31,8 @@ EXAMPLE = ROOT / 'examples/simple'
 
 
 def measure_all():
-    measure.run(['python3', 'build.py', 'web'], cwd=EXAMPLE)
-    measure.run(['python3', 'build.py', 'web'], cwd=ROOT / 'examples/stress')
+    measure.run([sys.executable, 'build.py', 'web'], cwd=EXAMPLE)
+    measure.run([sys.executable, 'build.py', 'web'], cwd=ROOT / 'examples/stress')
     beef = subprocess.run([os.environ.get('BEEF_BUILD', 'BeefBuild'), '-version'],
                           capture_output=True, text=True).stdout.strip().splitlines()[0]
     site = EXAMPLE / 'build/web'

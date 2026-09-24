@@ -20,16 +20,15 @@ tools/benchmarks.py      this port against the C -> docs/benchmarks.md
 ```sh
 git clone --recursive https://github.com/whirlinggizmo/wgrender-beef.git
 cd wgrender-beef/examples/simple
-./build.py web           # build/web/: simple.js + simple.wasm, wgrender's page shell
-./build.py serve         # http://localhost:8000/
-./build.py desktop       # build/Release_Linux64/simple/ (Linux; run it from here, beside assets/)
-node check_web.mjs       # load the web build in a headless browser, fail on errors
+python3 build.py web       # build/web/: simple.js + simple.wasm, wgrender's page shell
+python3 build.py serve     # http://localhost:8000/
+python3 build.py check     # load the web build in a headless browser, fail on errors
+python3 build.py desktop   # build/Release_Linux64/simple/ (Linux; run it from here, beside assets/)
 ```
 
-It needs BeefBuild (`BEEF_BUILD` names another), Emscripten for the web, and wgrender's
-own requirements (see its README). The IDE opens `examples/simple` as a workspace.
-wgrender is the submodule only: `BeefProj.toml` links it by path, so to try another
-wgrender, check it out there.
+BeefBuild, Python, and wgrender's own tools: Emscripten for the web, CMake and a C
+compiler for the desktop. What to install, the IDE, and which wgrender is used:
+[BUILDING.md](BUILDING.md).
 
 ## Benchmarks
 
