@@ -2,14 +2,14 @@
   "schema": 1,
   "project": "wgrender-beef",
   "environment": {
-    "date": "2026-09-23",
+    "date": "2026-09-24",
     "machine": "13th Gen Intel(R) Core(TM) i9-13900HX, Linux",
     "browser": "Brave Browser 153.1.95.104",
     "node": "v22.16.0",
     "emcc": "5.0.7"
   },
   "wgrender": {
-    "commit": "ae7a096",
+    "commit": "dcc17c3",
     "dirty": false,
     "source": "submodule"
   },
@@ -25,23 +25,23 @@
           {
             "name": "simple.wasm",
             "kind": "wasm",
-            "raw": 719493,
-            "gzip": 304408,
-            "brotli": 247443
+            "raw": 719506,
+            "gzip": 304431,
+            "brotli": 247738
           },
           {
             "name": "simple.js",
             "kind": "js",
-            "raw": 67589,
-            "gzip": 24105,
-            "brotli": 21402
+            "raw": 67595,
+            "gzip": 24106,
+            "brotli": 21376
           },
           {
             "name": "index.html",
             "kind": "page",
             "raw": 8612,
-            "gzip": 3593,
-            "brotli": 2916
+            "gzip": 3592,
+            "brotli": 2914
           },
           {
             "name": "examples.json",
@@ -52,33 +52,33 @@
           }
         ],
         "total": {
-          "raw": 795705,
-          "gzip": 332137,
-          "brotli": 271776
+          "raw": 795724,
+          "gzip": 332160,
+          "brotli": 272043
         }
       },
       "frame": {
         "label": "beef",
-        "frames": 480,
+        "frames": 481,
         "median": 16.66,
         "p95": 16.67,
         "overCap": 0,
-        "scriptMs": 0.491,
-        "taskMs": 0.784,
+        "scriptMs": 0.496,
+        "taskMs": 0.793,
         "scriptRuns": [
-          0.47,
-          0.491,
-          0.491
+          0.479,
+          0.496,
+          0.503
         ]
       },
       "gc": {
         "label": "beef",
-        "frames": 608,
+        "frames": 607,
         "uncapped": false,
-        "allocBytesPerFrame": 325,
-        "allocMBPerMinute": 1.1,
-        "collections": 0,
-        "freedMB": 0,
+        "allocBytesPerFrame": 2313,
+        "allocMBPerMinute": 7.9,
+        "collections": 2,
+        "freedMB": 1.15,
         "heapStartMB": 8.6,
         "heapEndMB": 8.8,
         "frameMs": {
@@ -86,7 +86,10 @@
           "p99": 16.67,
           "max": 16.67
         },
-        "gcFrameMs": null,
+        "gcFrameMs": {
+          "median": 16.67,
+          "max": 16.67
+        },
         "loadMs": 0,
         "lateFrames": {
           "over20": 0,
@@ -116,16 +119,16 @@
           "n": 1000,
           "frame": {
             "label": "beef-1000",
-            "frames": 480,
+            "frames": 479,
             "median": 16.66,
             "p95": 16.67,
             "overCap": 0,
-            "scriptMs": 0.421,
-            "taskMs": 0.503,
+            "scriptMs": 0.428,
+            "taskMs": 0.513,
             "scriptRuns": [
-              0.414,
-              0.421,
-              0.439
+              0.428,
+              0.428,
+              0.435
             ]
           },
           "gc": {
@@ -151,13 +154,13 @@
               "pct": 0
             },
             "gc": {
-              "totalMs": 0.5,
+              "totalMs": 0.6,
               "pctOfWall": 0.01,
               "minor": {
                 "count": 1,
-                "medianMs": 0.52,
-                "maxMs": 0.52,
-                "totalMs": 0.5
+                "medianMs": 0.58,
+                "maxMs": 0.58,
+                "totalMs": 0.6
               },
               "major": {
                 "count": 0,
@@ -173,16 +176,16 @@
           "n": 5000,
           "frame": {
             "label": "beef-5000",
-            "frames": 480,
+            "frames": 481,
             "median": 16.66,
             "p95": 16.67,
             "overCap": 0,
-            "scriptMs": 1.403,
-            "taskMs": 1.488,
+            "scriptMs": 1.452,
+            "taskMs": 1.541,
             "scriptRuns": [
-              1.377,
-              1.403,
-              1.437
+              1.348,
+              1.452,
+              1.466
             ]
           },
           "gc": {
@@ -208,13 +211,13 @@
               "pct": 0
             },
             "gc": {
-              "totalMs": 0.3,
-              "pctOfWall": 0,
+              "totalMs": 0.5,
+              "pctOfWall": 0.01,
               "minor": {
                 "count": 1,
-                "medianMs": 0.34,
-                "maxMs": 0.34,
-                "totalMs": 0.3
+                "medianMs": 0.51,
+                "maxMs": 0.51,
+                "totalMs": 0.5
               },
               "major": {
                 "count": 0,
@@ -234,26 +237,26 @@
             "median": 16.66,
             "p95": 16.67,
             "overCap": 0,
-            "scriptMs": 2.647,
-            "taskMs": 2.741,
+            "scriptMs": 2.637,
+            "taskMs": 2.728,
             "scriptRuns": [
-              2.632,
-              2.647,
-              2.695
+              2.616,
+              2.637,
+              2.663
             ]
           },
           "gc": {
             "label": "beef-10000",
             "frames": 607,
             "uncapped": false,
-            "allocBytesPerFrame": 412,
+            "allocBytesPerFrame": 414,
             "allocMBPerMinute": 1.4,
             "collections": 0,
             "freedMB": 0,
             "heapStartMB": 1.9,
             "heapEndMB": 2.2,
             "frameMs": {
-              "median": 16.66,
+              "median": 16.67,
               "p99": 16.67,
               "max": 16.67
             },
@@ -265,13 +268,13 @@
               "pct": 0
             },
             "gc": {
-              "totalMs": 0.6,
-              "pctOfWall": 0.01,
+              "totalMs": 0.4,
+              "pctOfWall": 0,
               "minor": {
                 "count": 1,
-                "medianMs": 0.59,
-                "maxMs": 0.59,
-                "totalMs": 0.6
+                "medianMs": 0.41,
+                "maxMs": 0.41,
+                "totalMs": 0.4
               },
               "major": {
                 "count": 0,

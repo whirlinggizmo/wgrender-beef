@@ -11,7 +11,7 @@ Everything a first visit downloads before the first frame, assets aside: the was
 | Configuration | wasm | JS | page | total raw | total gzip | total brotli | vs C (brotli) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | C | 695,675 | 65,953 | 10,648 | 772,276 | 321,360 | 261,955 | 1.00x |
-| Beef | 719,493 | 67,589 | 8,623 | 795,705 | 332,137 | 271,776 | 1.04x |
+| Beef * | 719,506 | 67,595 | 8,623 | 795,724 | 332,160 | 272,043 | 1.04x |
 
 ## Frame cost
 
@@ -19,8 +19,8 @@ Chrome's own CPU accounting over 8 s of steady state (`tools/bench/bench.mjs`), 
 
 | Configuration | script (ms/frame) | task (ms/frame) | script, all runs |
 | --- | ---: | ---: | --- |
-| Beef | 0.49 | 0.78 | 0.47, 0.49, 0.49 |
 | C | 0.50 | 0.79 | 0.44, 0.50, 0.52 |
+| Beef * | 0.50 | 0.79 | 0.48, 0.50, 0.50 |
 
 ## JS heap and GC
 
@@ -29,9 +29,9 @@ V8's traced collections over 10 s at 60 fps (`tools/bench/gcbench.mjs`). Only th
 | Configuration | game code runs in | alloc (B/frame) | alloc (MB/min) | collections traced | late frames |
 | --- | --- | ---: | ---: | --- | ---: |
 | C | wasm | 1,617 | 5.6 | none | 0 |
-| Beef | wasm | 325 | 1.1 | none | 0 |
+| Beef * | wasm | 2,313 | 7.9 | none | 0 |
 
-Code running in the wasm allocates nothing on the JS heap itself, so those rows (325 to 1,617 B/frame here) are the page's own noise: Emscripten's glue, the page and the measuring. Their order means nothing.
+Code running in the wasm allocates nothing on the JS heap itself, so those rows (1,617 to 2,313 B/frame here) are the page's own noise: Emscripten's glue, the page and the measuring. Their order means nothing.
 
 ## Stress
 
@@ -42,7 +42,7 @@ Script time per frame, the median of three runs:
 | Configuration | n = 1,000 | n = 5,000 | n = 10,000 |
 | --- | ---: | ---: | ---: |
 | C | 0.43 | 1.40 | 2.65 |
-| Beef | 0.42 | 1.40 | 2.65 |
+| Beef * | 0.43 | 1.45 | 2.64 |
 
 With 8 ms of other work burned in every frame, so a pause has little slack to hide in: JS heap allocation, the collections V8 traced, and frames over 20 ms (`tools/bench/gcbench.mjs`, 10 s).
 
@@ -51,9 +51,9 @@ With 8 ms of other work burned in every frame, so a pause has little slack to hi
 | C | 1,000 | 1.4 | 1 minor, 0.4 ms | 16.67 | 0 |
 | C | 5,000 | 1.4 | 1 minor, 0.5 ms | 16.67 | 0 |
 | C | 10,000 | 1.4 | 1 minor, 0.4 ms | 16.67 | 0 |
-| Beef | 1,000 | 1.4 | 1 minor, 0.5 ms | 16.67 | 0 |
-| Beef | 5,000 | 1.4 | 1 minor, 0.3 ms | 16.67 | 0 |
-| Beef | 10,000 | 1.4 | 1 minor, 0.6 ms | 16.67 | 0 |
+| Beef * | 1,000 | 1.4 | 1 minor, 0.6 ms | 16.67 | 0 |
+| Beef * | 5,000 | 1.4 | 1 minor, 0.5 ms | 16.67 | 0 |
+| Beef * | 10,000 | 1.4 | 1 minor, 0.4 ms | 16.67 | 0 |
 
 ## Calls from a JS guest
 
@@ -66,9 +66,13 @@ What a call from JS into wgrender's wasm costs, against the same call made insid
 | struct | `wgr_input_get_mouse_state` | 9.46 | 2.73 | 6.73 | 106,000 |
 | string | `wgr_text_measure` | 31.88 | 3.11 | 28.77 | 31,000 |
 
+\* Not comparable as-is:
+
+- wgrender-beef (2026-09-24): wgrender dcc17c3, baseline ae7a096
+
 ## Sources
 
 | Project | measured | against wgrender | toolchains |
 | --- | --- | --- | --- |
 | wgrender-c | 2026-09-23 | `ae7a096` (self) | Emscripten 5.0.7 |
-| wgrender-beef | 2026-09-23 | `ae7a096` (submodule) | BeefBuild 0.43.6 |
+| wgrender-beef | 2026-09-24 | `dcc17c3` (submodule) | BeefBuild 0.43.6 |
