@@ -23,7 +23,7 @@ cd wgrender-beef/examples/simple
 python3 build.py web       # build/web/: simple.js + simple.wasm, wgrender's page shell
 python3 build.py serve     # http://localhost:8000/
 python3 build.py check     # load the web build in a headless browser, fail on errors
-python3 build.py desktop   # build/Release_Linux64/simple/ (Linux; run it from here, beside assets/)
+python3 build.py desktop   # build/Release_Linux64/simple/ (Release_Win64 on Windows); run it from here
 ```
 
 BeefBuild, Python, and wgrender's own tools: Emscripten for the web, CMake and a C

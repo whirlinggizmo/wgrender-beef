@@ -4,3 +4,5 @@ __pycache__/
 recovery/
 # per-user IDE state: window geometry, recent files, last config
 BeefSpace_User.toml
+# made by build.py desktop: a link to wgrender's examples/assets
+examples/*/assets

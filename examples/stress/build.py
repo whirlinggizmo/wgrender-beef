@@ -3,7 +3,8 @@
 Beef workspace. Every example's build.py is this same file.
 
     ./build.py web [release | debug]     build/web (default) or build/web-debug
-    ./build.py desktop [release | debug] build/Release_Linux64/<name>/ (or Debug_...)
+    ./build.py desktop [release | debug] build/Release_Linux64/<name>/ (or Debug_..., and
+                                         _Win64 on Windows)
     ./build.py serve [port] [site]       serve build/web on http://localhost:8000/ with
                                          wgrender's dev server (examples/assets at /assets)
     ./build.py check [site]              load build/web in a headless browser: fail on a
@@ -11,8 +12,13 @@ Beef workspace. Every example's build.py is this same file.
                                          goes to build/web-check.png
 
 wgrender's library comes from wgrender's own build: the web one from its
-tools/buildweb.py (emcc and Python), the desktop one from its `desktop` CMake preset.
-The IDE builds the same thing (pick the wasm32 or Linux64 platform), but can't build
+tools/buildweb.py (emcc and Python), the desktop one from CMake: on Linux its `desktop`
+preset, on Windows MSVC (Beef links with MSVC's linker, which can't take MinGW objects),
+in Visual Studio's own environment (found with vswhere), with the static C runtime a
+Beef project links by default: build/desktop-msvc (/MT) and build/desktop-msvc-debug
+(/MTd).
+
+The IDE builds the same thing (pick the wasm32, Linux64 or Win64 platform), but can't build
 wgrender first: a pre-build step runs after BeefBuild has decided whether to relink.
 So after changing wgrender, run this before building in the IDE. BeefBuild relinks
 when libwgrender.a changes (it's in LibPaths).
@@ -42,6 +48,8 @@ NAME = ROOT.name
 WGRENDER = (ROOT / '../../project/lib/wgrender-c').resolve()
 BEEF_BUILD = os.environ.get('BEEF_BUILD', 'BeefBuild')
 KINDS = {'release': ('Release', '0'), 'debug': ('Debug', '1')}
+WINDOWS = os.name == 'nt'
+PLATFORM = 'Win64' if WINDOWS else 'Linux64'
 
 
 def run(cmd, **kw):
@@ -79,14 +87,64 @@ def web(kind):
           'then open http://localhost:8000/')
 
 
+def vcvars():
+    """Visual Studio's vcvars64.bat, found with the vswhere every install has."""
+    vswhere = pathlib.Path(os.environ.get('ProgramFiles(x86)', r'C:\Program Files (x86)'),
+                           'Microsoft Visual Studio/Installer/vswhere.exe')
+    if not vswhere.exists():
+        sys.exit('no Visual Studio (vswhere.exe): Beef on Windows links with MSVC')
+    install = subprocess.run([str(vswhere), '-latest', '-products', '*', '-requires',
+                              'Microsoft.VisualStudio.Component.VC.Tools.x86.x64', '-property', 'installationPath'],
+                             capture_output=True, text=True).stdout.strip()
+    bat = pathlib.Path(install, 'VC/Auxiliary/Build/vcvars64.bat')
+    if not install or not bat.exists():
+        sys.exit('no Visual Studio with the C++ tools (vcvars64.bat)')
+    return bat
+
+
+def msvc_library(kind):
+    """wgrender's library, built with MSVC and the static C runtime Beef links."""
+    out = WGRENDER / ('build/desktop-msvc' if kind == 'release' else 'build/desktop-msvc-debug')
+    crt = 'MultiThreaded' if kind == 'release' else 'MultiThreadedDebug'
+    configure = (f'cmake -S "{WGRENDER}" -B "{out}" -G Ninja -DCMAKE_C_COMPILER=cl '
+                 f'-DCMAKE_MSVC_RUNTIME_LIBRARY={crt} -DWGR_EXAMPLES=OFF')
+    build = f'cmake --build "{out}" --target wgrender'
+    # vcvars's own exit code isn't to be trusted, so `&`; the build's is
+    command = f'call "{vcvars()}" >nul & {configure} >nul && {build}'
+    print('+', command, flush=True)
+    if subprocess.run(command, shell=True).returncode != 0:
+        sys.exit('building wgrender with MSVC failed')
+
+
+def link_assets():
+    """assets/ beside this example: wgrender's examples/assets, which the desktop build
+    loads relative to the working directory. A link made here rather than committed:
+    git checks a symlink out on Windows as a text file naming its target. A directory
+    junction there, which needs no administrator or developer mode; a symlink elsewhere."""
+    link, target = ROOT / 'assets', WGRENDER / 'examples/assets'
+    if link.is_dir():
+        return
+    if link.exists() or link.is_symlink():
+        link.unlink()  # a symlink git checked out as a file, or a broken link
+    if WINDOWS:
+        subprocess.run(['cmd', '/c', 'mklink', '/J', str(link), str(target)], check=True, stdout=subprocess.DEVNULL)
+    else:
+        link.symlink_to(os.path.relpath(target, ROOT))
+    print(f'assets -> {target}')
+
+
 def desktop(kind):
     config, _ = KINDS[kind]
     need_wgrender()
-    # wgrender's desktop CMake preset, as far as the library: build/desktop/libwgrender.a
-    run(['cmake', '--preset', 'desktop'], cwd=WGRENDER, stdout=subprocess.DEVNULL)
-    run(['cmake', '--build', '--preset', 'desktop', '--target', 'wgrender'], cwd=WGRENDER)
-    run([BEEF_BUILD, f'-workspace={ROOT}', f'-config={config}', '-platform=Linux64'])
-    print(f'built {ROOT / "build" / f"{config}_Linux64/{NAME}"}: run it from {ROOT} (assets/ is here)')
+    link_assets()
+    if WINDOWS:
+        msvc_library(kind)
+    else:
+        # wgrender's desktop CMake preset, as far as the library: build/desktop/libwgrender.a
+        run(['cmake', '--preset', 'desktop'], cwd=WGRENDER, stdout=subprocess.DEVNULL)
+        run(['cmake', '--build', '--preset', 'desktop', '--target', 'wgrender'], cwd=WGRENDER)
+    run([BEEF_BUILD, f'-workspace={ROOT}', f'-config={config}', f'-platform={PLATFORM}'])
+    print(f'built {ROOT / "build" / f"{config}_{PLATFORM}/{NAME}"}: run it from {ROOT} (assets/ is here)')
 
 
 def serve(port='8000', site='build/web'):
@@ -97,12 +155,16 @@ def serve(port='8000', site='build/web'):
 def check(site='build/web'):
     """Serve the web build, load it in a headless browser for 8 s, move the mouse over
     the middle of the canvas, and fail on a console error, an uncaught exception, the
-    browser's own error log, or a screen of one colour (wgrender's tools/weblib.py)."""
+    browser's own error log, a program that never started (wgrender logs its backend
+    when it does), or a screen of one colour (wgrender's tools/weblib.py)."""
     need_wgrender()
+    missing = [f for f in (f'{NAME}.js', f'{NAME}.wasm') if not (ROOT / site / f).exists()]
+    if missing:
+        sys.exit(f'FAILED: {site} has no {" or ".join(missing)}: build it first (./build.py web)')
     sys.path.insert(0, str(WGRENDER / 'tools'))
     import weblib
     processes = weblib.RunProcesses(f'beef-{NAME}')
-    errors, lines = [], []
+    errors, lines, started = [], [], []
     try:
         port = weblib.free_port()
         processes.spawn([weblib.PYTHON, WGRENDER / 'tools/serve.py', port, ROOT / site])
@@ -116,6 +178,8 @@ def check(site='build/web'):
             if msg['method'] == 'Runtime.consoleAPICalled':
                 text = ' '.join(str(a['value']) if 'value' in a else a.get('description', '') for a in p['args'])
                 lines.append(text)
+                if 'libwgrender:' in text and 'backend' in text:
+                    started.append(text)
                 if p.get('type') == 'error' or re.search(r'\[(ERROR|FATAL)', text):
                     errors.append(text)
             elif msg['method'] == 'Runtime.exceptionThrown':
@@ -140,6 +204,8 @@ def check(site='build/web'):
         data = tab.send('Page.captureScreenshot', {'format': 'png'})['data']
         out = ROOT / 'build/web-check.png'
         out.write_bytes(base64.b64decode(data))
+        if not started:
+            errors.append('the program never started (wgrender logged no backend)')
         if weblib.distinct_colours(tab, data) < 2:
             errors.append(f'the screen is one flat colour: nothing was drawn ({out})')
         for line in lines:
