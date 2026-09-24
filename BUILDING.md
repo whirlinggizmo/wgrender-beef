@@ -19,7 +19,7 @@ then the Beef workspace with BeefBuild. There is no make and no shell script.
   (apt, dnf or pacman). On Windows it's Visual Studio's C++ tools (MSVC), which
   `build.py` finds with vswhere: Beef links with MSVC's linker, so wgrender is built with
   MSVC too, by its `windows-msvc[-debug]` preset, which uses the static C runtime a Beef
-  project links (`/MT`, `/MTd` for debug), into `build/windows/msvc[-debug]`. It needs no Visual Studio prompt, and CMake with
+  project links (`/MT`, `/MTd` for debug), into `out/windows/msvc[-debug]`. It needs no Visual Studio prompt, and CMake with
   Ninja on `PATH`.
 - Python 3
 - for `build.py check`: a Chromium-based browser (Brave, Chrome, Chromium or Edge); the
@@ -35,16 +35,27 @@ which needs the robknopf/Beef fork from 3ed0e0fc on (upstream looks only for the
 ```sh
 git clone --recursive https://github.com/whirlinggizmo/wgrender-beef.git
 cd wgrender-beef/examples/simple      # or examples/stress
-python3 build.py web          # build/web/: simple.js + simple.wasm, wgrender's page shell
-python3 build.py web debug    # build/web-debug/: no optimization, assertions
+python3 build.py web          # out/web/webgl2-nothreads/: simple.js + simple.wasm, wgrender's page shell
+python3 build.py web debug    # out/web/webgl2-nothreads-debug/: no optimization, assertions
 python3 build.py serve        # http://localhost:8000/ (assets at /assets)
-python3 build.py check        # load build/web in a headless browser, fail on errors
-python3 build.py desktop      # build/Release_Linux64/simple/ (Release_Win64 on Windows); run it
+python3 build.py check        # load the web build in a headless browser, fail on errors
+python3 build.py desktop      # out/linux/release/simple (out/windows/msvc/ on Windows); run it
                               #   from here, where build.py links assets/ to wgrender's
 ```
 
 The web build is WebGL2 without threads: the Beef objects aren't built with atomics, so
 they can't link into shared memory.
+
+Builds follow the wg* layout (whirlinggizmo/.github CONVENTIONS.md, "Build
+directories"): what they make in `out/<platform>/<variant>/`, their work in `build/`.
+One exception: BeefBuild names its own directory after the config and platform
+(`build/Release_Linux64/`, `build/Debug_wasm32/`, ...), and there is no setting that
+moves it, so those are Beef's names rather than `<platform>/<variant>`. It links there
+too, beside its byproducts (the LTO cache, `.build.txt` notes, `libBeefRT.a`), and each
+config's post-build step copies just the results into `out/`: the program (with its
+`.pdb` on Windows), or the `.js`, `.wasm` and page. That's in `BeefProj.toml`, so builds
+from the IDE land in `out/` as well. The rest of the work is in the layout: `check`'s
+screenshot is `build/web/<variant>/check.png`.
 
 The IDE opens an example's directory as a workspace and builds the same thing (pick the
 wasm32, Linux64 or Win64 platform), but it can't build wgrender first: a pre-build step runs
@@ -54,10 +65,10 @@ after BeefBuild has decided whether to relink. So after changing wgrender, run
 ## Which wgrender
 
 The submodule, `project/lib/wgrender-c`, and only that: the example projects link its
-library by path, from wgrender's `build/<platform>/<variant>/` (the wg* layout:
+library by path, from wgrender's `out/<platform>/<variant>/` (the wg* layout:
 whirlinggizmo/.github CONVENTIONS.md): `LibPaths` in `BeefProj.toml` names
-`build/linux/release/libwgrender.a` on Linux, `build/windows/msvc[-debug]/wgrender.lib`
-on Windows, and `build/web/webgl2-nothreads[-debug]/libwgrender.a` from buildweb.py. To try
+`out/linux/release/libwgrender.a` on Linux, `out/windows/msvc[-debug]/wgrender.lib`
+on Windows, and `out/web/webgl2-nothreads[-debug]/libwgrender.a` from buildweb.py. To try
 another wgrender, check it out in the submodule.
 
 ## Benchmarks
