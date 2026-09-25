@@ -24,7 +24,7 @@ class Program
 #endif
 	const char8* DEBUG_FONT_PATH  = "fonts/JetBrainsMono/JetBrainsMono-Regular.ttf";
 	const char8* KOMIKA_FONT_PATH = "fonts/Komika/KOMIKAH_.ttf";
-	const char8* MODEL_PATH       = "models/gumshoe/gumshoe.glb";
+	const char8* MODEL_PATH       = "models/woman_casual/woman_casual.glb";
 	const char8* SPRITE_PATH      = "sprites/logo/wg-logo-bw-alpha.png";
 	const char8* BGM_PATH         = "music/ethernight_club.mp3";
 

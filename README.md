@@ -37,3 +37,11 @@ wgrender's harness (`tools/bench/` in wgrender), against wgrender's C baseline, 
 `bench/results.json` and [docs/benchmarks.md](docs/benchmarks.md). Run wgrender's own
 `tools/benchmarks.py --all` to refresh every binding at once, or its plain run first
 and then this one. By hand, not in CI; the stress scene needs Xvfb and a GPU.
+
+## License
+
+MIT; see [LICENSE](LICENSE). wgrender, in `project/lib/wgrender-c`, is MIT too, and the
+libraries it vendors (sokol, clay, cgltf, stb and others) keep their own licenses, listed
+in [its README](https://github.com/whirlinggizmo/wgrender-c#license). The example assets
+come from wgrender as well; their credits and licenses are in its
+[examples/assets/CREDITS.md](https://github.com/whirlinggizmo/wgrender-c/blob/main/examples/assets/CREDITS.md).
