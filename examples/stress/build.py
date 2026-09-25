@@ -60,6 +60,11 @@ WINDOWS = os.name == 'nt'
 PLATFORM = 'Win64' if WINDOWS else 'Linux64'
 
 
+# BeefProj.toml's post-build steps run this script again: on this Python, rather than
+# whatever python3 is on the path (on Windows, perhaps the Microsoft Store's alias)
+BEEF_ENV = dict(os.environ, WGR_PYTHON=sys.executable)
+
+
 def run(cmd, **kw):
     print('+', ' '.join(str(c) for c in cmd), flush=True)
     subprocess.run([str(c) for c in cmd], check=True, **kw)
@@ -115,7 +120,7 @@ def web(kind):
     # webgl2 without threads: the Beef objects aren't built with atomics
     run([sys.executable, WGRENDER / 'tools/buildweb.py', 'BACKEND=webgl2', 'WEB_THREADS=0', f'WEB_DEBUG={debug}'],
         cwd=WGRENDER)
-    run([BEEF_BUILD, f'-workspace={ROOT}', f'-config={config}', '-platform=wasm32'])
+    run([BEEF_BUILD, f'-workspace={ROOT}', f'-config={config}', '-platform=wasm32'], env=BEEF_ENV)
     site = ROOT / web_site(kind)
     for f in (f'{NAME}.js', f'{NAME}.wasm'):
         print(f'{f}: {(site / f).stat().st_size:,} bytes')
@@ -178,7 +183,7 @@ def desktop(kind):
         # wgrender's linux-release preset, as far as the library: out/linux/release/libwgrender.a
         run(['cmake', '--preset', 'linux-release'], cwd=WGRENDER, stdout=subprocess.DEVNULL)
         run(['cmake', '--build', '--preset', 'linux-release', '--target', 'wgrender'], cwd=WGRENDER)
-    run([BEEF_BUILD, f'-workspace={ROOT}', f'-config={config}', f'-platform={PLATFORM}'])
+    run([BEEF_BUILD, f'-workspace={ROOT}', f'-config={config}', f'-platform={PLATFORM}'], env=BEEF_ENV)
     print(f'built {ROOT / desktop_out(kind) / NAME}: run it from {ROOT} (assets/ is here)')
 
 

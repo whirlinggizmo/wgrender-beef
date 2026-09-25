@@ -11,6 +11,8 @@ wgr = "*"
 # BeefBuild links into its own build/<Config>_<Platform>/<project>/ (it can't be moved),
 # beside its intermediates; each config's post-build step copies the results into
 # out/<platform>/<variant>/ (build.py install, build.py page), the wg* layout.
+# The step runs build.py on the Python that ran it (WGR_PYTHON, which build.py sets),
+# or python3 from a build in the IDE.
 
 # wgrender is the repository's submodule (project/lib/wgrender-c, pinned), linked
 # through LibPaths (not the link flags) so BeefBuild relinks when it changes. It isn't
@@ -19,12 +21,12 @@ wgr = "*"
 # Desktop: wgrender (its `linux-release` CMake preset) plus sokol's Linux system libraries
 # (build.json's desktop linux libs).
 [Configs.Debug.Linux64]
-PostBuildCmds = ["python3 \"$(ProjectDir)/build.py\" install \"$(TargetDir)\" \"$(ProjectDir)/out/linux/debug\""]
+PostBuildCmds = ["\"$(Env WGR_PYTHON python3)\" \"$(ProjectDir)/build.py\" install \"$(TargetDir)\" \"$(ProjectDir)/out/linux/debug\""]
 LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/out/linux/release/libwgrender.a"]
 OtherLinkFlags = "$(LinkFlags) -lGL -lX11 -lXi -lXcursor -lXrandr -lasound -ldl -lm -lpthread"
 
 [Configs.Release.Linux64]
-PostBuildCmds = ["python3 \"$(ProjectDir)/build.py\" install \"$(TargetDir)\" \"$(ProjectDir)/out/linux/release\""]
+PostBuildCmds = ["\"$(Env WGR_PYTHON python3)\" \"$(ProjectDir)/build.py\" install \"$(TargetDir)\" \"$(ProjectDir)/out/linux/release\""]
 LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/out/linux/release/libwgrender.a"]
 OtherLinkFlags = "$(LinkFlags) -lGL -lX11 -lXi -lXcursor -lXrandr -lasound -ldl -lm -lpthread"
 
@@ -32,12 +34,12 @@ OtherLinkFlags = "$(LinkFlags) -lGL -lX11 -lXi -lXcursor -lXrandr -lasound -ldl 
 # linker), which use the static C runtime a Beef project links by default, /MT for release and /MTd for
 # debug, plus the Windows libraries sokol needs (build.json's desktop windows libs).
 [Configs.Debug.Win64]
-PostBuildCmds = ["python3 \"$(ProjectDir)/build.py\" install \"$(TargetDir)\" \"$(ProjectDir)/out/windows/msvc-debug\""]
+PostBuildCmds = ["\"$(Env WGR_PYTHON python3)\" \"$(ProjectDir)/build.py\" install \"$(TargetDir)\" \"$(ProjectDir)/out/windows/msvc-debug\""]
 LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/out/windows/msvc-debug/wgrender.lib"]
 OtherLinkFlags = "$(LinkFlags) opengl32.lib gdi32.lib user32.lib kernel32.lib ole32.lib shell32.lib winmm.lib"
 
 [Configs.Release.Win64]
-PostBuildCmds = ["python3 \"$(ProjectDir)/build.py\" install \"$(TargetDir)\" \"$(ProjectDir)/out/windows/msvc\""]
+PostBuildCmds = ["\"$(Env WGR_PYTHON python3)\" \"$(ProjectDir)/build.py\" install \"$(TargetDir)\" \"$(ProjectDir)/out/windows/msvc\""]
 LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/out/windows/msvc/wgrender.lib"]
 OtherLinkFlags = "$(LinkFlags) opengl32.lib gdi32.lib user32.lib kernel32.lib ole32.lib shell32.lib winmm.lib"
 
@@ -49,10 +51,10 @@ OtherLinkFlags = "$(LinkFlags) opengl32.lib gdi32.lib user32.lib kernel32.lib ol
 TargetName = "stress.js"
 LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/out/web/webgl2-nothreads-debug/libwgrender.a"]
 OtherLinkFlags = "$(LinkFlags) -O0 -g -sASSERTIONS=1 -sUSE_WEBGL2=1 -sALLOW_MEMORY_GROWTH=1 -sFORCE_FILESYSTEM -lidbfs.js"
-PostBuildCmds = ["python3 \"$(ProjectDir)/build.py\" page \"$(TargetDir)\" \"$(ProjectDir)/out/web/webgl2-nothreads-debug\""]
+PostBuildCmds = ["\"$(Env WGR_PYTHON python3)\" \"$(ProjectDir)/build.py\" page \"$(TargetDir)\" \"$(ProjectDir)/out/web/webgl2-nothreads-debug\""]
 
 [Configs.Release.wasm32]
 TargetName = "stress.js"
 LibPaths = ["$(ProjectDir)/../../project/lib/wgrender-c/out/web/webgl2-nothreads/libwgrender.a"]
 OtherLinkFlags = "$(LinkFlags) -O3 --closure 1 -sENVIRONMENT=web,worker -sUSE_WEBGL2=1 -sALLOW_MEMORY_GROWTH=1 -sFORCE_FILESYSTEM -lidbfs.js"
-PostBuildCmds = ["python3 \"$(ProjectDir)/build.py\" page \"$(TargetDir)\" \"$(ProjectDir)/out/web/webgl2-nothreads\""]
+PostBuildCmds = ["\"$(Env WGR_PYTHON python3)\" \"$(ProjectDir)/build.py\" page \"$(TargetDir)\" \"$(ProjectDir)/out/web/webgl2-nothreads\""]
