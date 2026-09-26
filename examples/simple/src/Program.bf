@@ -26,7 +26,7 @@ class Program
 	const char8* KOMIKA_FONT_PATH = "fonts/Komika/KOMIKAH_.ttf";
 	const char8* CHARACTER_PATH   = "models/woman_casual/woman_casual.glb";
 	const char8* SPRITE_PATH      = "sprites/logo/wg-logo-bw-alpha.png";
-	const char8* BGM_PATH         = "music/ethernight_club.mp3";
+	const char8* MUSIC_PATH       = "music/a_hero_is_born.mp3";
 
 	const int32 SCREEN_WIDTH = 1024;
 	const int32 SCREEN_HEIGHT = 1280;
@@ -139,7 +139,7 @@ class Program
 		backgroundColor = wgr_color_rgba(245, 245, 245, 255);
 		greyAlpha = wgr_color_rgba(0, 0, 0, 128);
 
-		Load(BGM_PATH, => OnBgmReady);
+		Load(MUSIC_PATH, => OnBgmReady);
 		Load(CHARACTER_PATH, => OnModelReady);
 		Load(SPRITE_PATH, => OnSpriteReady);
 		Load(DEBUG_FONT_PATH, => OnDebugFontReady);
