@@ -1,5 +1,12 @@
 # wgrender-beef
 
+> **Archived (2026-10-02).** Not maintained: it stays as it was, its
+> `project/lib/wgrender-c` submodule pinned to wgrender-c `ff58538`, an API wgrender-c's
+> main has since moved past (callbacks became polled tasks). For a binding that is
+> maintained, and the rules a new one follows, see
+> [wgrender-c](https://github.com/whirlinggizmo/wgrender-c) and its
+> [`bindings/haxe`](https://github.com/whirlinggizmo/wgrender-c/tree/main/bindings/haxe).
+
 [wgrender](https://github.com/whirlinggizmo/wgrender-c) for
 [Beef](https://www.beeflang.org/): as much of the API as the `simple` example needs,
 which makes it wgrender's Beef entry in the cross-binding benchmarks. It is not a
